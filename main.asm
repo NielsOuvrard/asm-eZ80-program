@@ -31,7 +31,8 @@ create1555palette:
 	ld	a,ti.lcdBpp8
 	ld	(ti.mpLcdCtrl),a	; enable 8bpp mode
 
-	ld	a,$e0			; place your favorite color index here
+	; place your favorite color index here
+	ld	a,$00
 	ld	hl,ti.vRam		; address of screen in memory ($d40000)
 	ld	bc,ti.lcdWidth * ti.lcdHeight
 	call	ti.MemSet
