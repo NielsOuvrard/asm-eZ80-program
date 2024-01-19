@@ -34,7 +34,9 @@ create1555palette:
 	; place your favorite color index here
 	ld	a,$af
 	ld	hl,ti.vRam		; address of screen in memory ($d40000)
-	ld	bc,ti.lcdWidth * ti.lcdHeight / 2
+	ld	bc,ti.lcdWidth * ti.lcdHeight
+	; divide by 2
+	; ld	de,2
 	call	ti.MemSet
 
 wait4key:
