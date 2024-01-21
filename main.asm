@@ -1,7 +1,7 @@
 include 'include/ez80.inc'
 include 'include/tiformat.inc'
 include 'include/ti84pceg.inc'
-format ti executable 'MEMO'
+format ti executable 'MAIN'
 
 
 
@@ -44,15 +44,15 @@ create1555palette:
 	; ld	bc,ti.lcdWidth * ti.lcdHeight / 2
 	; call	ti.MemSet
 
-	ld	bc,ti.lcdWidth / 2
-colorHalfSide:
-	ld	de,ti.lcdWidth
-	ld	hl,0
-	ld	c,0
-	add	hl,bc
-	call	multiplyNumbers ; hl = (ti.lcdWidth * b)
-	ld de, ti.vRam
-	add	hl, de      ; hl += ti.vRam
+; 	ld	bc,ti.lcdWidth / 2
+; colorHalfSide:
+; 	ld	de,ti.lcdWidth
+; 	ld	hl,0
+; 	ld	c,0
+; 	add	hl,bc
+; 	call	multiplyNumbers ; hl = (ti.lcdWidth * b)
+; 	ld de, ti.vRam
+; 	add	hl, de      ; hl += ti.vRam
 
 	; Load the first operand into register A
 
@@ -65,15 +65,19 @@ colorHalfSide:
 
 
 
-
+	; ld	a,$c2			; place your favorite color index here
+	; ld	hl,ti.vRam + ti.lcdWidth * ti.lcdHeight / 2
+	; ld	bc,ti.lcdWidth * ti.lcdHeight / 2
+	; call	ti.MemSet
 
 	ld	a,$44			; place your favorite color index here
+	ld	hl,ti.vRam + ti.lcdWidth
 	; ld	hl,ti.vRam + (ti.lcdWidth * b) ;; I want
-	ld	bc,(ti.lcdWidth / 2)
+	ld	bc,ti.lcdWidth / 2
 	call	ti.MemSet
 
-	dec	bc
-	jr	z,colorHalfSide
+	; dec	bc
+	; jr	z,colorHalfSide
 
 
 wait4key:
@@ -89,10 +93,10 @@ wait4key:
 	ret				; return to os
 
 ; function multiply (de, hl)
-multiplyNumbers:
-	ld	c,0
-multiplyLoop:
-	add	hl, de  ; Add DE to HL (DE is treated as a 16-bit value)
-	dec	c       ; Decrement B
-	jr	nz, multiplyLoop ; Jump back to the loop if B is not zero
-	ret
+; multiplyNumbers:
+; 	ld	b,0
+; multiplyLoop:
+; 	add	hl, de  ; Add DE to HL (DE is treated as a 16-bit value)
+; 	dec	b       ; Decrement B
+; 	jr	nz, multiplyLoop ; Jump back to the loop if B is not zero
+; 	ret
