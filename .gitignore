@@ -1,3 +1,5 @@
 fasmg-*
 *.8xp
 .DS_Store
+include/*
+half.asm

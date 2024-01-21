@@ -1,6 +1,11 @@
-# TI-83 PCE Doom-like Game
+<!-- # TI-83 PCE Doom-like Game
 
-This project is an attempt to create a Doom-like game for the TI-83 PCE calculator, written in eZ80 assembly language.
+This project is an attempt to create a Doom-like game for the TI-83 PCE calculator, written in eZ80 assembly language. -->
+
+# Program for TI-83 PCE, coded in asm eZ80
+
+This project is an attempt to create a program for TI-83 PCE calculator, written in eZ80 assembly language.
+It's only for learning purpose.
 
 <!-- The game aims to bring the classic first-person shooter experience to the calculator platform. -->
 
