@@ -5,7 +5,7 @@ format ti executable 'DEMO'
 
 RECT_WIDTH := 10
 RECT_HEIGHT := 10
-RECT_COLOR_I := 255
+RECT_COLOR_I := 135
 
 ; Start of program code
 	call	ti.RunIndicOff		; turn off run indicator
@@ -132,7 +132,8 @@ center_rectangle:
 redraw_screen:
 	ld	hl,ti.vRam
 	ld	bc,ti.lcdWidth * ti.lcdHeight
-	call	ti.MemClear		; set the LCD background
+	ld	a,$cc
+	call	ti.MemSet		; set the LCD background
 
 	ld	a,RECT_COLOR_I		; change the color of the rectangle
 	ld	(draw_rectangle.color),a
