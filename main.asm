@@ -46,7 +46,6 @@ create1555palette:
 
 ; 	ld	bc,ti.lcdWidth / 2
 ; colorHalfSide:
-; 	ld	de,ti.lcdWidth
 ; 	ld	hl,0
 ; 	ld	c,0
 ; 	add	hl,bc
@@ -63,6 +62,11 @@ create1555palette:
 
 	; The result is now in HL
 
+	ld	de,ti.lcdHeight / 2
+	ld	hl,ti.lcdWidth
+	call	multiplyNumbers
+	ld	de,ti.vRam
+	add hl,de
 
 
 	; ld	a,$c2			; place your favorite color index here
@@ -70,10 +74,13 @@ create1555palette:
 	; ld	bc,ti.lcdWidth * ti.lcdHeight / 2
 	; call	ti.MemSet
 
-	ld	a,$44			; place your favorite color index here
-	ld	hl,ti.vRam + ti.lcdWidth
+	ld	a,$cc			; place your favorite color index here
+	; ld	hl,ti.vRam + ti.lcdWidth
 	; ld	hl,ti.vRam + (ti.lcdWidth * b) ;; I want
 	ld	bc,ti.lcdWidth / 2
+
+	; hl = begining of line
+	; bc = size
 	call	ti.MemSet
 
 	; dec	bc
@@ -93,10 +100,10 @@ wait4key:
 	ret				; return to os
 
 ; function multiply (de, hl)
-; multiplyNumbers:
-; 	ld	b,0
-; multiplyLoop:
-; 	add	hl, de  ; Add DE to HL (DE is treated as a 16-bit value)
-; 	dec	b       ; Decrement B
-; 	jr	nz, multiplyLoop ; Jump back to the loop if B is not zero
-; 	ret
+multiplyNumbers:
+	ld	b,0
+multiplyLoop:
+	add	hl, de  ; Add DE to HL (DE is treated as a 16-bit value)
+	dec	b       ; Decrement B
+	jr	nz, multiplyLoop ; Jump back to the loop if B is not zero
+	ret
