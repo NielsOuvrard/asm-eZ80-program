@@ -1,7 +1,9 @@
 include 'include/ez80.inc'
 include 'include/tiformat.inc'
 include 'include/ti84pceg.inc'
-format ti executable 'DEMO'
+format ti executable 'MEMO'
+
+
 
 ; Start of program code
 	call	ti.RunIndicOff		; turn off run indicator
@@ -31,13 +33,48 @@ create1555palette:
 	ld	a,ti.lcdBpp8
 	ld	(ti.mpLcdCtrl),a	; enable 8bpp mode
 
-	; place your favorite color index here
-	ld	a,$af
-	ld	hl,ti.vRam		; address of screen in memory ($d40000)
-	ld	bc,ti.lcdWidth * ti.lcdHeight
-	; divide by 2
-	; ld	de,2
+
+	; ld	a,$aa			; place your favorite color index here
+	; ld	hl,ti.vRam
+	; ld	bc,ti.lcdWidth * ti.lcdHeight / 2
+	; call	ti.MemSet ; print
+
+	; ld	a,$cc			; place your favorite color index here
+	; ld	hl,ti.vRam + ti.lcdWidth * ti.lcdHeight / 2
+	; ld	bc,ti.lcdWidth * ti.lcdHeight / 2
+	; call	ti.MemSet
+
+	ld	bc,ti.lcdWidth / 2
+colorHalfSide:
+	ld	de,ti.lcdWidth
+	ld	hl,0
+	ld	c,0
+	add	hl,bc
+	call	multiplyNumbers ; hl = (ti.lcdWidth * b)
+	ld de, ti.vRam
+	add	hl, de      ; hl += ti.vRam
+
+	; Load the first operand into register A
+
+	; ld c,0
+	; ld hl, bc     ; Initialize HL to 0, this will store the result
+
+	; Loop to perform multiplication
+
+	; The result is now in HL
+
+
+
+
+
+	ld	a,$44			; place your favorite color index here
+	; ld	hl,ti.vRam + (ti.lcdWidth * b) ;; I want
+	ld	bc,(ti.lcdWidth / 2)
 	call	ti.MemSet
+
+	dec	bc
+	jr	z,colorHalfSide
+
 
 wait4key:
 	call	ti.GetCSC
@@ -50,3 +87,12 @@ wait4key:
 	call	ti.DrawStatusBar
 	ei				; reset screen back to normal
 	ret				; return to os
+
+; function multiply (de, hl)
+multiplyNumbers:
+	ld	c,0
+multiplyLoop:
+	add	hl, de  ; Add DE to HL (DE is treated as a 16-bit value)
+	dec	c       ; Decrement B
+	jr	nz, multiplyLoop ; Jump back to the loop if B is not zero
+	ret
